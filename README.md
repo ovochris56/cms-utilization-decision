@@ -60,7 +60,7 @@ Example logic included:
 - Provider percentile ranking using window functions
 - Utilization category classification using CASE logic
 - KPI aggregation views for executive reporting
-- 
+
 ---
 
 ## Limitations & responsible use
