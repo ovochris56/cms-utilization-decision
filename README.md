@@ -61,6 +61,29 @@ Example logic included:
 - Utilization category classification using CASE logic
 - KPI aggregation views for executive reporting
 
+Brief SQL Snippet:
+
+SELECT TOP 15 *
+FROM dbo.v_Procedure_Outliers
+ORDER BY AvgPercentile DESC;
+
+CREATE OR ALTER VIEW dbo.v_Provider_Utilization AS
+SELECT
+    NPI,
+    MAX(Provider_Last_Name) AS ProviderLastName,
+    MAX(Provider_First_Name) AS ProviderFirstName,
+    AVG(CAST(Percentile AS float)) AS AvgPercentile,
+    COUNT(*) AS ProcedureRecords,
+    SUM(CASE WHEN CAST(Percentile AS float) >= 80 THEN 1 ELSE 0 END) AS HighUtilizationRecords
+FROM dbo.Utilization
+WHERE Percentile IS NOT NULL
+GROUP BY NPI;
+GO
+
+SELECT TOP 25 *
+FROM dbo.v_Provider_Utilization
+ORDER BY AvgPercentile DESC;
+
 ---
 
 ## Limitations & responsible use
